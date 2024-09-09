@@ -1,4 +1,4 @@
-mport __main__
+import __main__
 
 from os import environ, listdir, path
 import json
