@@ -1,0 +1,31 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Debug'  # Default build configuration
+
+jobs:
+- job: Build
+  displayName: 'Build Project'
+  steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration)'
+  
+- job: BuildRelease
+  displayName: 'Build Release Project'
+  dependsOn: Build
+  variables:
+    buildConfiguration: 'Release'  # Set to Release mode
+  steps:
+  - task: DotNetCoreCLI@2
+    inputs:
+      command: 'build'
+      projects: '**/*.csproj'
+      arguments: '--configuration $(buildConfiguration)'
+
